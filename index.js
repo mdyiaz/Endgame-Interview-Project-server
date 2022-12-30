@@ -96,6 +96,20 @@ async function run (){
 
 
 
+        // implement like option____________________________
+        app.patch('/likes', async(req, res) => {
+            const id = req.query.id;
+            const body = req.body;
+            console.log(id, body);
+            const filter = {_id: ObjectId(id)}
+            const option = {upsert:true};
+            const update = {$set:{like:body.like}}
+            const result = await postCollection.updateOne(filter, update, option);
+            res.send(result);
+        })
+
+
+
 
 
 
@@ -130,7 +144,7 @@ run().catch(error => console.error(error));
 
 
 
-
+// testing the server______________________________________________
 app.get('/', async(req, res) => {
     res.send('Server is running');
 })
